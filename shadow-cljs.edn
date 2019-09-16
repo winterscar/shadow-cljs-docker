@@ -1,0 +1,8 @@
+{:source-paths ["src"]
+ :dependencies [[re-frame "0.11.0-rc1"]]
+ :dev-http {8700 "target/"}
+ :builds {:app {:output-dir "target/"
+                :asset-path "."
+                :target :browser
+                :modules {:app {:init-fn app.main/main!}}
+                :devtools {:after-load app.main/reload!}}}}
