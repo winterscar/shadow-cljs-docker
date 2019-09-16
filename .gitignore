@@ -1,7 +1,7 @@
 .idea
 *.iml
 node_modules
-target
+target/js
 package-lock.json
 cljs-runtime
 manifest.json
