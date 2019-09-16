@@ -1,0 +1,12 @@
+version: '3'
+services:
+  dev:
+    image: shadowcljs-base:11
+    volumes:
+      - .:/usr/src/service
+    working_dir: /usr/src/service
+    command: npm run watch
+    ports:
+      - 8700:8700
+      - 8777:8777
+      - 9630:9630
