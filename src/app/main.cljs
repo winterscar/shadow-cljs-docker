@@ -1,7 +1,9 @@
 (ns app.main
   (:require [reagent.core :as reagent]
             [re-frame.core :as rf]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [goog.string :as gstring]
+            [goog.string.format]))
 
 ;; A detailed walk-through of this source code is provided in the docs:
 ;; https://github.com/Day8/re-frame/blob/master/docs/CodeWalkthrough.md
@@ -55,6 +57,45 @@
 
 ;; -- Domino 5 - View Functions ----------------------------------------------
 
+(defn to-hex-string
+  [rgb-values]
+  (->> rgb-values
+       (map #(-> (.toString % 16) (.padStart 2 "0")))
+       (apply str "#")))
+
+(defn rand-color
+  []
+  (->> 
+      (repeatedly #(rand-int 0xff))
+      (take 3)
+      (to-hex-string)))
+
+(defn get-compliment
+  [color]
+  (->> (subs color 1)
+       (re-seq #".{1,2}")
+       (map #(-> (js/parseInt % 16) (- 0xff) (js/Math.abs)))
+       (to-hex-string)))
+
+
+(defn colors
+  "return an grid of colored circles with random colors"
+  []
+  [:div
+   (map
+    #(identity [:div.colors
+                {:style
+                 {:background-color %
+                  :color (get-compliment %)
+                  :width "50px"
+                  :height "50px"
+                  :border-radius "100%"
+                  :line-height "50px"
+                  :text-align "center"
+                  :margin ""}} "✔"])
+    (take 4 (repeatedly rand-color)))])
+
+
 (defn clock
   []
   [:div.example-clock
@@ -77,6 +118,7 @@
   [:div
    [:h1 "Hello world"]
    [clock]
+   [colors]
    [color-input]])
 
 ;; -- Entry Point -------------------------------------------------------------

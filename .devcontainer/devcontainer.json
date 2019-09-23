@@ -31,9 +31,9 @@
 	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
 	// "shutdownAction": "none",
 
-	// Uncomment the next line to run commands after the container is created - for example installing git.
+  // Install git and add copy across my ssh identity. 
 	"postCreateCommand": "apk update && apk add git openssh && npm i && mkdir -p ~/.ssh && cp -r /.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*",
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
-	"extensions": []
+	"extensions": ["betterthantomorrow.calva"]
 }
